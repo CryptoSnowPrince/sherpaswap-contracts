@@ -22,6 +22,15 @@ module.exports = {
         },
       },
       {
+        version: '0.8.12',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
+      {
         version: '0.8.20',
       },
     ]
