@@ -6,8 +6,7 @@
   "scripts": {
     "compile": "hardhat compile",
     "deploy": "hardhat run scripts/deploy.js",
-    "deployCore": "hardhat run scripts/deployCore.js",
-    "deployRouter": "hardhat run scripts/deployRouter.js"
+    "deployUtils": "hardhat run scripts/deployUtils.js"
   },
   "dependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
@@ -16,6 +15,7 @@
     "axios": "^1.6.7",
     "crypto-browserify": "^3.12.0",
     "dotenv": "^16.4.1",
+    "fs": "^0.0.1-security",
     "hardhat": "^2.19.5"
   }
 }

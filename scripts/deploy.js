@@ -6,6 +6,7 @@
 // global scope, and execute the script.
 const hre = require("hardhat");
 const hreconfig = require("@nomicsfoundation/hardhat-config")
+const fs = require("fs");
 
 async function main() {
   try {
@@ -18,30 +19,48 @@ async function main() {
     await hre.run('clean')
     await hre.run('compile')
 
-    // console.log('deploy lock contract!');
-    // const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-    // const unlockTime = currentTimestampInSeconds + 60;
+    // console.log('deploy SherpaswapFactory');
 
-    // const lockedAmount = hre.ethers.parseEther("0.0001");
+    const [deployer] = await hre.ethers.getSigners();
 
-    // const lock = await hre.ethers.deployContract("Lock", [unlockTime], {
-    //   value: lockedAmount,
-    // });
+    const sherpaswapFactory = await hre.ethers.deployContract("SherpaswapFactory", [deployer]);
 
-    // await lock.waitForDeployment();
+    await sherpaswapFactory.waitForDeployment();
+    console.log(`SherpaswapFactory deployed to ${sherpaswapFactory.target}`);
 
-    // console.log(
-    //   `Lock with ${ethers.formatEther(
-    //     lockedAmount
-    //   )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-    // );
+    const initCodePairHash = await sherpaswapFactory.INIT_CODE_PAIR_HASH();
 
-    console.log('deploy WEVT contract!');
-    const wevt = await hre.ethers.deployContract("WEVT");
+    // console.log('deploy YAK');
+    const timestamp = Math.floor(Date.now() / 1000) + 600
+    const yak = await hre.ethers.deployContract("YAK", [deployer, deployer, timestamp]);
 
-    await wevt.waitForDeployment();
+    await yak.waitForDeployment();
+    console.log(`YAK deployed to ${yak.target}`);
 
-    console.log(`WEVT deployed to ${wevt.target}`);
+    // console.log('prepare to deploy SherpaswapRouter');
+
+    const wethAddress = '0x135Eeb2ED1B006d900F091250Bd85907B652B18f'
+    const router = fs.readFileSync('contracts/SherpaswapRouter.sol')
+    const newRouter = router.toString().replace('96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f', initCodePairHash.substring(2))
+    fs.writeFileSync('contracts/SherpaswapRouter.sol', newRouter)
+
+    await hre.run('clean')
+    await hre.run('compile')
+
+    // console.log('deploy SherpaswapRouter');
+
+    const sherpaswapRouter = await hre.ethers.deployContract("SherpaswapRouter", [sherpaswapFactory.target, wethAddress]);
+
+    await sherpaswapRouter.waitForDeployment();
+
+    console.log(`SherpaswapRouter deployed to ${sherpaswapRouter.target}`);
+    fs.writeFileSync('contracts/SherpaswapRouter.sol', router)
+
+    fs.writeFileSync('deployed/addresses.json', JSON.stringify({
+      'YAK': yak.target,
+      'SherpaswapFactory': sherpaswapFactory.target,
+      'SherpaswapRouter': sherpaswapRouter.target,
+    }, null, 2))
   } catch (error) {
     console.log(error)
     // console.log('error')

@@ -2,6 +2,8 @@
 
 ## 1. Environment
 
+Please check `node` version and `npm` version and install the correct version.
+
 ```text
 node v18.18.2
 npm 9.8.1
@@ -22,13 +24,7 @@ MNEMONIC_PASSWORD='your password'
 npm install
 ```
 
-## 4. Compile Smart Contracts
-
-```shell
-npm run compile
-```
-
-## 5. Deploy Smart Contracts
+## 4. Deploy Smart Contracts
 
 ```shell
 npm run deploy
