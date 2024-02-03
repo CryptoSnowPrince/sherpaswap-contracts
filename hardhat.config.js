@@ -50,7 +50,7 @@ module.exports = {
       },
     ]
   },
-  defaultNetwork: "goerli",
+  defaultNetwork: "evt",
   networks: {
     goerli: {
       url: 'https://eth-goerli.public.blastapi.io',
@@ -122,7 +122,7 @@ module.exports = {
         network: "seitestnet",
         chainId: 713715,
         urls: {
-          apiURL: "https://seitrace.com/api/",
+          apiURL: "https://arctic-1-api.seitrace.com/api/",
           browserURL: "https://seitrace.com/"
         }
       },
