@@ -50,7 +50,7 @@ module.exports = {
       },
     ]
   },
-  defaultNetwork: "seitestnet",
+  defaultNetwork: "evt",
   networks: {
     evt: {
       url: 'http://158.69.35.30:8545',
