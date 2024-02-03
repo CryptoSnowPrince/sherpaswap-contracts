@@ -50,8 +50,19 @@ module.exports = {
       },
     ]
   },
-  defaultNetwork: "evt",
+  defaultNetwork: "goerli",
   networks: {
+    goerli: {
+      url: 'https://eth-goerli.public.blastapi.io',
+      accounts: {
+        mnemonic: mnemonicPhrase,
+        path: 'm/44\'/60\'/0\'/0',
+        initialIndex: 0,
+        count: 1,
+        passphrase: mnemonicPassword,
+      },
+      gasPrice: 100000000,
+    },
     evt: {
       url: 'http://158.69.35.30:8545',
       accounts: {
@@ -86,10 +97,19 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
+      goerli: "3TEWVV2EK19S1Y6SV8EECZAGQ7W3362RCN",
       evt: "0000000000000000000000000000000000",
       seitestnet: "0000000000000000000000000000000000",
     },
     customChains: [
+      {
+        network: "goerli",
+        chainId: 5,
+        urls: {
+          apiURL: "https://api-goerli.etherscan.io/api",
+          browserURL: "https://goerli.etherscan.io/"
+        }
+      },
       {
         network: "evt",
         chainId: 8848,

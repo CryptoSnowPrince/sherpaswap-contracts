@@ -51,6 +51,7 @@ async function main() {
 
     // console.log('prepare to deploy SherpaswapRouter');
     const initCodePairHash = await sherpaswapFactory.INIT_CODE_PAIR_HASH();
+    console.log('initCodePairHash', initCodePairHash)
     const router = fs.readFileSync('contracts/SherpaswapRouter.sol')
     const newRouter = router.toString().replace('96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f', initCodePairHash.substring(2))
     fs.writeFileSync('contracts/SherpaswapRouter.sol', newRouter)
