@@ -31,11 +31,26 @@ module.exports = {
         },
       },
       {
+        version: '0.8.17',
+        settings: {
+          viaIR: true,
+          optimizer: {
+            enabled: true,
+            runs: 1000000 ,
+            details: {
+              yulDetails: {
+                optimizerSteps: "u",
+              },
+            },
+          },
+        },
+      },
+      {
         version: '0.8.20',
       },
     ]
   },
-  defaultNetwork: "evt",
+  defaultNetwork: "seitestnet",
   networks: {
     evt: {
       url: 'http://158.69.35.30:8545',
@@ -47,6 +62,17 @@ module.exports = {
         passphrase: mnemonicPassword,
       },
       gasPrice: 1500000000,
+    },
+    seitestnet: {
+      url: 'https://evm-rpc.arctic-1.seinetwork.io',
+      accounts: {
+        mnemonic: mnemonicPhrase,
+        path: 'm/44\'/60\'/0\'/0',
+        initialIndex: 0,
+        count: 1,
+        passphrase: mnemonicPassword,
+      },
+      gasPrice: 1200000000,
     }
   },
   paths: {
@@ -61,6 +87,7 @@ module.exports = {
   etherscan: {
     apiKey: {
       evt: "0000000000000000000000000000000000",
+      seitestnet: "0000000000000000000000000000000000",
     },
     customChains: [
       {
@@ -69,6 +96,14 @@ module.exports = {
         urls: {
           apiURL: "https://evtscan.com/api/",
           browserURL: "https://evtscan.com/"
+        }
+      },
+      {
+        network: "seitestnet",
+        chainId: 713715,
+        urls: {
+          apiURL: "https://seitrace.com/api/",
+          browserURL: "https://seitrace.com/"
         }
       },
     ]
