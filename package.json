@@ -5,9 +5,7 @@
   "description": "sherpswap smart contracts",
   "scripts": {
     "compile": "hardhat compile",
-    "deploy": "hardhat run scripts/deploy.js",
-    "deployUtils": "hardhat run scripts/deployUtils.js",
-    "deploySet": "hardhat run scripts/deploySet.js"
+    "deploy": "hardhat run scripts/deploy.js"
   },
   "dependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",

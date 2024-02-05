@@ -73,17 +73,6 @@ module.exports = {
         passphrase: mnemonicPassword,
       },
       gasPrice: 1500000000,
-    },
-    seitestnet: {
-      url: 'https://evm-rpc.arctic-1.seinetwork.io',
-      accounts: {
-        mnemonic: mnemonicPhrase,
-        path: 'm/44\'/60\'/0\'/0',
-        initialIndex: 0,
-        count: 1,
-        passphrase: mnemonicPassword,
-      },
-      gasPrice: 1200000000,
     }
   },
   paths: {
@@ -99,7 +88,6 @@ module.exports = {
     apiKey: {
       goerli: "3TEWVV2EK19S1Y6SV8EECZAGQ7W3362RCN",
       evt: "0000000000000000000000000000000000",
-      seitestnet: "0000000000000000000000000000000000",
     },
     customChains: [
       {
@@ -116,14 +104,6 @@ module.exports = {
         urls: {
           apiURL: "https://evtscan.com/api/",
           browserURL: "https://evtscan.com/"
-        }
-      },
-      {
-        network: "seitestnet",
-        chainId: 713715,
-        urls: {
-          apiURL: "https://arctic-1-api.seitrace.com/api/",
-          browserURL: "https://seitrace.com/"
         }
       },
     ]

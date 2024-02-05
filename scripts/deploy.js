@@ -20,47 +20,39 @@ async function main() {
     await hre.run('compile')
 
     // console.log('deploy SherpaswapFactory');
-
     const [deployer] = await hre.ethers.getSigners();
-
     const sherpaswapFactory = await hre.ethers.deployContract("SherpaswapFactory", [deployer]);
-
     await sherpaswapFactory.waitForDeployment();
     console.log(`SherpaswapFactory deployed to ${sherpaswapFactory.target}`);
-
-    const initCodePairHash = await sherpaswapFactory.INIT_CODE_PAIR_HASH();
-
+    
     // console.log('deploy YAK');
     const timestamp = Math.floor(Date.now() / 1000) + 600
     const yak = await hre.ethers.deployContract("YAK", [deployer, deployer, timestamp]);
-
     await yak.waitForDeployment();
     console.log(`YAK deployed to ${yak.target}`);
-
+    
     // console.log('prepare to deploy SherpaswapRouter');
-
-    const wethAddress = '0x135Eeb2ED1B006d900F091250Bd85907B652B18f'
+    const initCodePairHash = await sherpaswapFactory.INIT_CODE_PAIR_HASH();
+    const wethAddress = '0x399FA293e0CD85f4B87809698C921829E730a687'
     const router = fs.readFileSync('contracts/SherpaswapRouter.sol')
     const newRouter = router.toString().replace('96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f', initCodePairHash.substring(2))
     fs.writeFileSync('contracts/SherpaswapRouter.sol', newRouter)
-
     await hre.run('clean')
     await hre.run('compile')
 
     // console.log('deploy SherpaswapRouter');
-
     const sherpaswapRouter = await hre.ethers.deployContract("SherpaswapRouter", [sherpaswapFactory.target, wethAddress]);
-
     await sherpaswapRouter.waitForDeployment();
-
     console.log(`SherpaswapRouter deployed to ${sherpaswapRouter.target}`);
     fs.writeFileSync('contracts/SherpaswapRouter.sol', router)
 
     fs.writeFileSync('deployed/addresses.json', JSON.stringify({
       'YAK': yak.target,
       'SherpaswapFactory': sherpaswapFactory.target,
+      'InitCodePairHash': initCodePairHash.substring(2),
       'SherpaswapRouter': sherpaswapRouter.target,
     }, null, 2))
+    console.log('deploy OK')
   } catch (error) {
     console.log(error)
     // console.log('error')
