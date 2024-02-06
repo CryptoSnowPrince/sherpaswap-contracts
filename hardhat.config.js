@@ -2,7 +2,8 @@ require("@nomicfoundation/hardhat-toolbox");
 require('dotenv').config();
 
 // Config from environment
-const mnemonicPhrase = process.env.MNEMONIC || 'test test test test test test test test test test test junk';
+const mnemonicPhrase = process.env.MNEMONIC;
+const privateKey = process.env.PRIVATE_KEY;
 const mnemonicPassword = process.env.MNEMONIC_PASSWORD;
 
 /** @type import('hardhat/config').HardhatUserConfig */
@@ -36,7 +37,7 @@ module.exports = {
           viaIR: true,
           optimizer: {
             enabled: true,
-            runs: 1000000 ,
+            runs: 1000000,
             details: {
               yulDetails: {
                 optimizerSteps: "u",
@@ -54,6 +55,7 @@ module.exports = {
   networks: {
     goerli: {
       url: 'https://eth-goerli.public.blastapi.io',
+      // accounts: [privateKey]
       accounts: {
         mnemonic: mnemonicPhrase,
         path: 'm/44\'/60\'/0\'/0',
@@ -65,6 +67,7 @@ module.exports = {
     },
     evt: {
       url: 'http://158.69.35.30:8545',
+      // accounts: [privateKey]
       accounts: {
         mnemonic: mnemonicPhrase,
         path: 'm/44\'/60\'/0\'/0',

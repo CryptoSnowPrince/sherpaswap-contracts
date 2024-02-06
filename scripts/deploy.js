@@ -21,6 +21,9 @@ async function main() {
 
     // console.log('deploy SherpaswapFactory');
     const [deployer] = await hre.ethers.getSigners();
+    const balance = await hre.ethers.provider.getBalance(deployer); // Get the balance of the deployer's account
+    console.log(`Deployer address is ${deployer.address}`,);
+    console.log(`Deployer balance is ${hre.ethers.formatEther(balance)} ETH`,);
     const sherpaswapFactory = await hre.ethers.deployContract("SherpaswapFactory", [deployer]);
     await sherpaswapFactory.waitForDeployment();
     console.log(`SherpaswapFactory deployed to ${sherpaswapFactory.target}`);
