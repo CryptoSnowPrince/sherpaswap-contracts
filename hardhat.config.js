@@ -51,10 +51,10 @@ module.exports = {
       },
     ]
   },
-  defaultNetwork: "evt",
+  defaultNetwork: "sepolia",
   networks: {
-    goerli: {
-      url: 'https://eth-goerli.public.blastapi.io',
+    sepolia: {
+      url: 'https://eth-sepolia.g.alchemy.com/v2/FyaG4rCRhXWV0ZBGB6kepdKDp9vnyC3x',
       // accounts: [privateKey]
       accounts: {
         mnemonic: mnemonicPhrase,
@@ -63,7 +63,7 @@ module.exports = {
         count: 1,
         passphrase: mnemonicPassword,
       },
-      gasPrice: 100000000,
+      gasPrice: 10_000_000_000,
     },
     evt: {
       url: 'http://158.69.35.30:8545',
